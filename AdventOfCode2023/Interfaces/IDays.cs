@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2023.Days
+﻿namespace AdventOfCode2023.Interfaces
 {
     public interface IDay
     {

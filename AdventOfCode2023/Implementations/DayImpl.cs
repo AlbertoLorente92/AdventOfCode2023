@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AdventOfCode2023.Interfaces;
 
-namespace AdventOfCode2023.Factory
+namespace AdventOfCode2023.Implementations
 {
     internal sealed class DayImpl : IExecuteDay
     {

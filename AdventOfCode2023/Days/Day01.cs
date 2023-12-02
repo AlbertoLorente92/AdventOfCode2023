@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using AdventOfCode2023.Interfaces;
 
 namespace AdventOfCode2023.Days
 {
@@ -90,7 +91,7 @@ namespace AdventOfCode2023.Days
             return digits[LastDigit];
         }
 
-            private int GetCalibrationValuePart2(string line)
+        private int GetCalibrationValuePart2(string line)
         {
             Dictionary<string, string> digits = CreateDictionaryWithNumbers();
             return int.Parse(new StringBuilder().Append(GetFirstDigitPart2(digits, line)).Append(GetLastDigitPart2(digits, line)).ToString());

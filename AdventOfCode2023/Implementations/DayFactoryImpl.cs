@@ -1,6 +1,6 @@
-﻿using AdventOfCode2023.Days;
+﻿using AdventOfCode2023.Interfaces;
 
-namespace AdventOfCode2023.Factory
+namespace AdventOfCode2023.Implementations
 {
     internal sealed class DayFactoryImpl : IDayFactory
     {

@@ -1,6 +1,4 @@
-﻿using AdventOfCode2023.Days;
-
-namespace AdventOfCode2023
+﻿namespace AdventOfCode2023.Interfaces
 {
     internal interface IDayFactory
     {

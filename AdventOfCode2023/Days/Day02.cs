@@ -1,4 +1,5 @@
-﻿using static AdventOfCode2023.Days.Day02.Game;
+﻿using AdventOfCode2023.Interfaces;
+using static AdventOfCode2023.Days.Day02.Game;
 
 namespace AdventOfCode2023.Days
 {
@@ -94,7 +95,6 @@ namespace AdventOfCode2023.Days
                 return FewestColorsEachGame(games).Select(round => round.red * round.green * round.blue).Sum();
             }
         }
-
         internal sealed class Game
         {
             public int id { get; set; }
@@ -105,7 +105,6 @@ namespace AdventOfCode2023.Days
                 this.id = id;
                 this.rounds = rounds;
             }
-
             public bool IsPosible(Round elfbag)
             {
                 foreach (Round round in rounds)
@@ -117,7 +116,6 @@ namespace AdventOfCode2023.Days
                 }
                 return true;
             }
-
             public Round FewestColorsFromGame()
             {
                 int red, green, blue;
@@ -139,7 +137,6 @@ namespace AdventOfCode2023.Days
                 }
                 return new Round(red: red, green: green, blue: blue);
             }
-
             internal sealed class Round
             {
                 public int blue { get; set; }

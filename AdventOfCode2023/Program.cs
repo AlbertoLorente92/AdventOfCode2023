@@ -1,5 +1,5 @@
-﻿using AdventOfCode2023;
-using AdventOfCode2023.Factory;
+﻿using AdventOfCode2023.Implementations;
+using AdventOfCode2023.Interfaces;
 
 IDayFactory operatorFactory = new DayFactoryImpl();
 IExecuteDay calculator = new DayImpl(operatorFactory);

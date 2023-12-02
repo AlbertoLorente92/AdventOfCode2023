@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2023.Days
+﻿using AdventOfCode2023.Interfaces;
+
+namespace AdventOfCode2023.Days
 {
     internal sealed class Day0X : IDay
     {
