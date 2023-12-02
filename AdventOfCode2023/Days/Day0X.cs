@@ -17,7 +17,7 @@ namespace AdventOfCode2023.Days
             Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part2\test1.txt", printLines: true, executePart1: false));
             Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part1\test2.txt", printLines: false, executePart1: false));
         }
-        private void PrintLines(string[] lines)
+        private static void PrintLines(string[] lines)
         {
             foreach (string line in lines)
             {
@@ -26,7 +26,7 @@ namespace AdventOfCode2023.Days
         }
 
 
-        private int Day(string file, bool printLines, bool executePart1)
+        private static int Day(string file, bool printLines, bool executePart1)
         {
             string[] lines = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, file));
 

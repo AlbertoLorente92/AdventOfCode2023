@@ -18,47 +18,46 @@ namespace AdventOfCode2023.Days
             Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part2\test1.txt", printLines: true, executePart1: false));
             Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part1\test2.txt", printLines: false, executePart1: false));
         }
-        private void PrintLines(string[] lines)
+        private static void PrintLines(string[] lines)
         {
             foreach (string line in lines)
             {
                 Console.WriteLine(line);
             }
         }
-        private int GetCalibrationValuePart1(string line)
+        private static int GetCalibrationValuePart1(string line)
         {
-            List<char> digits = line.Where(character => char.IsDigit(character)).ToList();
+            List<char> digits = line.Where(char.IsDigit).ToList();
             StringBuilder FirstAndLastDigit = new StringBuilder().Append(digits.First()).Append(digits.Last());
             return int.Parse(FirstAndLastDigit.ToString());
         }
 
-        Dictionary<string, string> CreateDictionaryWithNumbers()
+        static Dictionary<string, string> CreateDictionaryWithNumbers()
         {
-            Dictionary<string, string> digits = new()
-        {
-            { "1"    , "1" },
-            { "2"    , "2" },
-            { "3"    , "3" },
-            { "4"    , "4" },
-            { "5"    , "5" },
-            { "6"    , "6" },
-            { "7"    , "7" },
-            { "8"    , "8" },
-            { "9"    , "9" },
-            { "one"  , "1" },
-            { "two"  , "2" },
-            { "three", "3" },
-            { "four" , "4" },
-            { "five" , "5" },
-            { "six"  , "6" },
-            { "seven", "7" },
-            { "eight", "8" },
-            { "nine" , "9" }
-        };
-            return digits;
+            return new Dictionary<string, string>()
+            {
+                { "1"    , "1" },
+                { "2"    , "2" },
+                { "3"    , "3" },
+                { "4"    , "4" },
+                { "5"    , "5" },
+                { "6"    , "6" },
+                { "7"    , "7" },
+                { "8"    , "8" },
+                { "9"    , "9" },
+                { "one"  , "1" },
+                { "two"  , "2" },
+                { "three", "3" },
+                { "four" , "4" },
+                { "five" , "5" },
+                { "six"  , "6" },
+                { "seven", "7" },
+                { "eight", "8" },
+                { "nine" , "9" }
+            };
         }
 
-        string GetFirstDigitPart2(Dictionary<string, string> digits, string line)
+        static string GetFirstDigitPart2(Dictionary<string, string> digits, string line)
         {
             int firstDigitIndex = line.Length;
             string firstDigit = string.Empty;
@@ -74,7 +73,7 @@ namespace AdventOfCode2023.Days
             }
             return digits[firstDigit];
         }
-        private string GetLastDigitPart2(Dictionary<string, string> digits, string line)
+        private static string GetLastDigitPart2(Dictionary<string, string> digits, string line)
         {
             int LastDigitIndex = -1;
             string LastDigit = string.Empty;
@@ -91,13 +90,13 @@ namespace AdventOfCode2023.Days
             return digits[LastDigit];
         }
 
-        private int GetCalibrationValuePart2(string line)
+        private static int GetCalibrationValuePart2(string line)
         {
             Dictionary<string, string> digits = CreateDictionaryWithNumbers();
             return int.Parse(new StringBuilder().Append(GetFirstDigitPart2(digits, line)).Append(GetLastDigitPart2(digits, line)).ToString());
         }
 
-        private int Day(string file, bool printLines, bool executePart1)
+        private static int Day(string file, bool printLines, bool executePart1)
         {
             string[] lines = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, file));
 

@@ -1,4 +1,5 @@
-﻿using AdventOfCode2023.Interfaces;
+﻿using AdventOfCode2023.Days;
+using AdventOfCode2023.Interfaces;
 
 namespace AdventOfCode2023.Implementations
 {
@@ -10,8 +11,8 @@ namespace AdventOfCode2023.Implementations
             _days = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
                 .Where(t => !t.IsInterface && typeof(IDay).IsAssignableFrom(t))
-                .ToDictionary(t => (int)t.GetProperty(nameof(IDay.DayNumber)).GetValue(null), t => t);
+                .ToDictionary(keySelector: t => (int)(t.GetProperty(nameof(IDay.DayNumber))!.GetValue(null) ?? 0), t => t);
         }
-        public IDay GetOperator(int day) => (IDay)Activator.CreateInstance(_days[day]);
+        public IDay GetOperator(int day) => (IDay)(Activator.CreateInstance(_days[day]) ?? new Day0X());
     }
 }

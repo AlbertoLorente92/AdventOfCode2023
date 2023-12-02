@@ -18,7 +18,7 @@ namespace AdventOfCode2023.Days
             Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part2\test1.txt", printLines: true, executePart1: false));
             Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part1\test2.txt", printLines: false, executePart1: false));
         }
-        private void PrintLines(string[] lines)
+        private static void PrintLines(string[] lines)
         {
             foreach (string line in lines)
             {
@@ -26,7 +26,7 @@ namespace AdventOfCode2023.Days
             }
         }
 
-        private List<Game> GetGamesFromLines(string[] lines)
+        private static List<Game> GetGamesFromLines(string[] lines)
         {
             List<Game> games = new();
             List<Round> roundsGame;
@@ -65,17 +65,17 @@ namespace AdventOfCode2023.Days
             return games;
         }
 
-        private List<int> GamesIdThatArePosible(List<Game> games, Round elfBag)
+        private static List<int> GamesIdThatArePosible(List<Game> games, Round elfBag)
         {           
-            return games.Where(game => game.IsPosible(elfBag)).Select(game => game.id).ToList(); 
+            return games.Where(game => game.IsPosible(elfBag)).Select(game => game.Id).ToList(); 
         }
 
-        private List<Round> FewestColorsEachGame(List<Game> games)
+        private static List<Round> FewestColorsEachGame(List<Game> games)
         {
             return games.Select(game => game.FewestColorsFromGame()).ToList();
         }
 
-        private int Day(string file, bool printLines, bool executePart1)
+        private static int Day(string file, bool printLines, bool executePart1)
         {
             string[] lines = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, file));
 
@@ -92,24 +92,24 @@ namespace AdventOfCode2023.Days
             }
             else
             {
-                return FewestColorsEachGame(games).Select(round => round.red * round.green * round.blue).Sum();
+                return FewestColorsEachGame(games).Select(round => round.Red * round.Green * round.Blue).Sum();
             }
         }
         internal sealed class Game
         {
-            public int id { get; set; }
-            public List<Round> rounds { get; set; }
+            public int Id { get; set; }
+            public List<Round> Rounds { get; set; }
 
             public Game(int id, List<Round> rounds)
             {
-                this.id = id;
-                this.rounds = rounds;
+                this.Id = id;
+                this.Rounds = rounds;
             }
             public bool IsPosible(Round elfbag)
             {
-                foreach (Round round in rounds)
+                foreach (Round round in Rounds)
                 {
-                    if (round.green > elfbag.green || round.red > elfbag.red || round.blue > elfbag.blue)
+                    if (round.Green > elfbag.Green || round.Red > elfbag.Red || round.Blue > elfbag.Blue)
                     {
                         return false;
                     }
@@ -120,32 +120,32 @@ namespace AdventOfCode2023.Days
             {
                 int red, green, blue;
                 red = green = blue = 0;
-                foreach (Round round in rounds)
+                foreach (Round round in Rounds)
                 {
-                    if (round.green > green)
+                    if (round.Green > green)
                     {
-                        green = round.green;
+                        green = round.Green;
                     }
-                    if (round.red > red)
+                    if (round.Red > red)
                     {
-                        red = round.red;
+                        red = round.Red;
                     }
-                    if (round.blue > blue)
+                    if (round.Blue > blue)
                     {
-                        blue = round.blue;
+                        blue = round.Blue;
                     }
                 }
                 return new Round(red: red, green: green, blue: blue);
             }
             internal sealed class Round
             {
-                public int blue { get; set; }
-                public int red { get; set; }
-                public int green { get; set; }
+                public int Blue { get; set; }
+                public int Red { get; set; }
+                public int Green { get; set; }
                 public Round(int blue, int red, int green) {
-                    this.blue = blue;
-                    this.red = red;
-                    this.green = green;
+                    this.Blue = blue;
+                    this.Red = red;
+                    this.Green = green;
                 }
             }
         }
