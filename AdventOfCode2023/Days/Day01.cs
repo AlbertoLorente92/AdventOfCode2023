@@ -8,14 +8,14 @@ namespace AdventOfCode2023.Days
 
         void IDay.Part1()
         {
-            Console.WriteLine(Day1(@"Tests\Day1\Part1\test1.txt", printLines: true, executePart1: true));
-            Console.WriteLine(Day1(@"Tests\Day1\Part1\test2.txt", printLines: false, executePart1: true));
+            Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part1\test1.txt", printLines: true, executePart1: true));
+            Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part1\test2.txt", printLines: false, executePart1: true));
         }
 
         void IDay.Part2()
         {
-            Console.WriteLine(Day1(@"Tests\Day1\Part2\test1.txt", printLines: true, executePart1: false));
-            Console.WriteLine(Day1(@"Tests\Day1\Part1\test2.txt", printLines: false, executePart1: false));
+            Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part2\test1.txt", printLines: true, executePart1: false));
+            Console.WriteLine(Day(@"Tests\Day"+DayNumber+@"\Part1\test2.txt", printLines: false, executePart1: false));
         }
         private void PrintLines(string[] lines)
         {
@@ -96,7 +96,7 @@ namespace AdventOfCode2023.Days
             return int.Parse(new StringBuilder().Append(GetFirstDigitPart2(digits, line)).Append(GetLastDigitPart2(digits, line)).ToString());
         }
 
-        private int Day1(string file, bool printLines, bool executePart1)
+        private int Day(string file, bool printLines, bool executePart1)
         {
             string[] lines = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, file));
 

@@ -17,7 +17,13 @@ namespace AdventOfCode2023.Factory
 
         public void Execute(int day, int part)
         {
-            _operatorFactory.GetOperator(day).Part1();
+            if (part == 1) {
+                _operatorFactory.GetOperator(day).Part1();
+            }
+            if (part == 2)
+            {
+                _operatorFactory.GetOperator(day).Part2();
+            }
         }
     }
 }
