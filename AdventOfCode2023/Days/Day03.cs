@@ -73,9 +73,75 @@ namespace AdventOfCode2023.Days
             return numbersAdjacentToASimbol;
         }
 
+        private static int ReadNumberToTheLeft(char[][] engineSchematic, int i, int j)
+        {
+            StringBuilder sb = new();
+            sb.Append(engineSchematic[i][j]);
+            for (int x = j - 1; x >= 0; x--)
+            {
+                if (char.IsNumber(engineSchematic[i][x]))
+                {
+                    sb.Insert(0, engineSchematic[i][x]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return int.Parse(sb.ToString());
+        }
+
+        private static int ReadNumberInTheMiddle(char[][] engineSchematic, int i, int j)
+        {
+            StringBuilder sb = new();
+            sb.Append(engineSchematic[i][j]);
+            for (int x = j - 1; x >= 0; x--)
+            {
+                if (char.IsNumber(engineSchematic[i][x]))
+                {
+                    sb.Insert(0, engineSchematic[i][x]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            for (int x = j + 1; x < engineSchematic[i - 1].Length; x++)
+            {
+                if (char.IsNumber(engineSchematic[i][x]))
+                {
+                    sb.Append(engineSchematic[i][x]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return int.Parse(sb.ToString());
+        }
+
+        private static int ReadNumberToTheRight(char[][] engineSchematic, int i, int j)
+        {
+            StringBuilder sb = new();
+            sb.Append(engineSchematic[i][j]);
+            for (int x = j + 1; x < engineSchematic[i].Length; x++)
+            {
+                if (char.IsNumber(engineSchematic[i][x]))
+                {
+                    sb.Append(engineSchematic[i][x]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return int.Parse(sb.ToString());
+        }
+
+
         private static int GetGearRatio(char[][] engineSchematic, int i, int j)
         {
-            List <int> result = new();
+            List <int> numbersAroundTheAsterisk = new();
             bool topLeft, topMiddle, topRight;
             bool left, right;
             bool bottomLeft, bottomMiddle, bottomRight;
@@ -91,182 +157,55 @@ namespace AdventOfCode2023.Days
             bottomMiddle = char.IsNumber(engineSchematic[i + 1][j]);
             bottomRight  = char.IsNumber(engineSchematic[i + 1][j + 1]);
 
-            StringBuilder sb;
             // check the left side
             if (left)
             {
-                sb = new();
-                sb.Append(engineSchematic[i][j - 1].ToString());
-                for (int x = j - 2; x >= 0; x--)
-                {
-                    if (char.IsNumber(engineSchematic[i][x]))
-                    {
-                        sb.Insert(0, engineSchematic[i][x].ToString());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                result.Add(int.Parse(sb.ToString()));
+                numbersAroundTheAsterisk.Add(ReadNumberToTheLeft(engineSchematic, i, j - 1));
             }
             // check the right side
             if (right)
             {
-                sb = new();
-                sb.Append(engineSchematic[i][j + 1].ToString());
-                for (int x = j + 2; x < engineSchematic[i].Length; x++)
-                {
-                    if (char.IsNumber(engineSchematic[i][x]))
-                    {
-                        sb.Append(engineSchematic[i][x].ToString());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                result.Add(int.Parse(sb.ToString()));
+                numbersAroundTheAsterisk.Add(ReadNumberToTheRight(engineSchematic, i, j + 1));
             }
 
-            //check topside
+            //check top side
             if (!topMiddle)
             {
                 if (topLeft)
                 {
-                    sb = new();
-                    sb.Append(engineSchematic[i - 1][j - 1].ToString());
-                    for (int x = j - 2; x >= 0; x--)
-                    {
-                        if (char.IsNumber(engineSchematic[i - 1][x]))
-                        {
-                            sb.Insert(0, engineSchematic[i - 1][x].ToString());
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    result.Add(int.Parse(sb.ToString()));
+                    numbersAroundTheAsterisk.Add(ReadNumberToTheLeft(engineSchematic, i - 1, j - 1));
                 }
                 if (topRight)
                 {
-                    sb = new();
-                    sb.Append(engineSchematic[i - 1][j + 1].ToString());
-                    for (int x = j + 2; x < engineSchematic[i - 1].Length; x++)
-                    {
-                        if (char.IsNumber(engineSchematic[i - 1][x]))
-                        {
-                            sb.Append(engineSchematic[i - 1][x].ToString());
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    result.Add(int.Parse(sb.ToString()));
+                    numbersAroundTheAsterisk.Add(ReadNumberToTheRight(engineSchematic, i - 1, j + 1));
                 }
             }
             else
             {
-                // Top middle is a number... we must check to the right and the left
-                sb = new();
-                sb.Append(engineSchematic[i - 1][j].ToString());
-                for (int x = j - 1; x >= 0; x--)
-                {
-                    if (char.IsNumber(engineSchematic[i - 1][x]))
-                    {
-                        sb.Insert(0, engineSchematic[i - 1][x].ToString());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                for (int x = j + 1; x < engineSchematic[i - 1].Length; x++)
-                {
-                    if (char.IsNumber(engineSchematic[i - 1][x]))
-                    {
-                        sb.Append(engineSchematic[i - 1][x].ToString());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                result.Add(int.Parse(sb.ToString()));
+                numbersAroundTheAsterisk.Add(ReadNumberInTheMiddle(engineSchematic, i - 1, j));
             }
 
-            //check bottomside
+            //check bottom side
             if (!bottomMiddle)
             {
                 if (bottomLeft)
                 {
-                    sb = new();
-                    sb.Append(engineSchematic[i + 1][j - 1].ToString());
-                    for (int x = j - 2; x >= 0; x--)
-                    {
-                        if (char.IsNumber(engineSchematic[i + 1][x]))
-                        {
-                            sb.Insert(0, engineSchematic[i + 1][x].ToString());
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    result.Add(int.Parse(sb.ToString()));
+                    numbersAroundTheAsterisk.Add(ReadNumberToTheLeft(engineSchematic, i + 1, j - 1));
                 }
                 if (bottomRight)
                 {
-                    sb = new();
-                    sb.Append(engineSchematic[i + 1][j + 1].ToString());
-                    for (int x = j + 2; x < engineSchematic[i + 1].Length; x++)
-                    {
-                        if (char.IsNumber(engineSchematic[i + 1][x]))
-                        {
-                            sb.Append(engineSchematic[i + 1][x].ToString());
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    result.Add(int.Parse(sb.ToString()));
+                    numbersAroundTheAsterisk.Add(ReadNumberToTheRight(engineSchematic, i + 1, j + 1));
                 }
             }
             else
             {
-                // middle is a number... we must check to the right and the left
-                sb = new();
-                sb.Append(engineSchematic[i + 1][j].ToString());
-                for (int x = j - 1; x >= 0; x--)
-                {
-                    if (char.IsNumber(engineSchematic[i + 1][x]))
-                    {
-                        sb.Insert(0, engineSchematic[i + 1][x].ToString());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                for (int x = j + 1; x < engineSchematic[i + 1].Length; x++)
-                {
-                    if (char.IsNumber(engineSchematic[i + 1][x]))
-                    {
-                        sb.Append(engineSchematic[i + 1][x].ToString());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                result.Add(int.Parse(sb.ToString()));
+                numbersAroundTheAsterisk.Add(ReadNumberInTheMiddle(engineSchematic, i + 1, j));
             }
-            if (result.Count == 2)
+
+
+            if (numbersAroundTheAsterisk.Count == 2)
             {
-                return result[0] * result[1];
+                return numbersAroundTheAsterisk[0] * numbersAroundTheAsterisk[1];
             }
             else
             {
@@ -278,9 +217,9 @@ namespace AdventOfCode2023.Days
         {
             List<int> numbersAdjacentToASimbol = new();
             int gearsRatio;
-            for (int i = 0; i < engineSchematic.Length; i++)
+            for (int i = 1; i < engineSchematic.Length - 1; i++)
             {
-                for (int j = 0; j < engineSchematic[i].Length; j++)
+                for (int j = 1; j < engineSchematic[i].Length - 1; j++)
                 {
                     if (engineSchematic[i][j] == '*')
                     {
@@ -295,22 +234,29 @@ namespace AdventOfCode2023.Days
             return numbersAdjacentToASimbol;
         }
 
+        private static char[][] CreateEngineSchematicMap(string[] lines)
+        {
+            // To make everything easier we will surround the map in '.' chars
+            char[][] engineSchematic = new char[lines.Length + 2][];    // Thats why +2
+            engineSchematic[0] = new char[lines[0].Length + 2];
+            engineSchematic[lines.Length + 1] = new char[lines[0].Length + 2];
+            for (int i = 0; i <= lines.Length + 1; i++)
+            {
+                engineSchematic[0][i] = '.';
+                engineSchematic[lines.Length + 1][i] = '.';
+            }
+            for (int i = 1; i <= lines.Length; i++)
+            {
+                engineSchematic[i] = ("." + lines[i - 1].ToString() + ".").ToCharArray();
+            }
+            return engineSchematic;
+        }
+
         private static int Day(string file, bool printLines, bool executePart1)
         {
             string[] lines = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, file));
 
-            char[][] engineSchematic = new char[lines.Length + 2][];
-            engineSchematic[0] = new char[lines[0].Length + 2];
-            engineSchematic[lines.Length+1] = new char[lines[0].Length + 2];
-            for (int i = 0; i <= lines.Length + 1; i++)
-            {
-                engineSchematic[0][i] = '.';
-                engineSchematic[lines.Length+1][i] = '.';
-            }
-            for (int i = 1; i <= lines.Length; i++)
-            {
-                engineSchematic[i] = ("."+lines[i-1].ToString()+".").ToCharArray();
-            }
+            char[][] engineSchematic = CreateEngineSchematicMap(lines);
 
             if (printLines)
             {
